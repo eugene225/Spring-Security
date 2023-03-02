@@ -2,6 +2,7 @@ package com.spring.myspringsecurity.controller;
 
 import com.spring.myspringsecurity.model.Board;
 import com.spring.myspringsecurity.repository.BoardRepository;
+import com.spring.myspringsecurity.validator.BoardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class BoardController {
 
     @Autowired
     BoardRepository boardRepository;
+
+    @Autowired
+    private BoardValidator boardValidator;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -39,6 +43,10 @@ public class BoardController {
 
     @PostMapping("/form")
     public String boardSubmit(@Valid Board board, BindingResult bindingResult){
+        boardValidator.validate(board, bindingResult);
+        if(bindingResult.hasErrors()){
+            return "board/form";
+        }
         boardRepository.save(board);
         return "redirect:/board/list";
     }

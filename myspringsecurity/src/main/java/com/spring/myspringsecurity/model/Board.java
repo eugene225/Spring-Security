@@ -16,7 +16,10 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Size
+    @Size(min=2, max=30, message = "제목은 2자이상 30자 이하입니다.")
     private String title;
+
+    @NotNull
+    @Size(min=2, max=50)
     private String content;
 }
