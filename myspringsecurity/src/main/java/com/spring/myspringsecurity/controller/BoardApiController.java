@@ -3,6 +3,7 @@ package com.spring.myspringsecurity.controller;
 import com.spring.myspringsecurity.model.Board;
 import com.spring.myspringsecurity.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
@@ -55,6 +56,7 @@ public class BoardApiController {
                 });
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/boards/{id}")
     void deleteBoard(@PathVariable Long id) {
         boardRepository.deleteById(id);
