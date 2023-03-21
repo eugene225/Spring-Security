@@ -1,5 +1,6 @@
 package com.spring.myspringsecurity.controller;
 
+import com.spring.myspringsecurity.model.Board;
 import com.spring.myspringsecurity.model.User;
 import com.spring.myspringsecurity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,10 @@ public class UserApiController {
                 .map(user -> {
 //                    user.setTitle(newUser.getTitle());
 //                    user.setContent(newUser.getContent());
-
+                    user.setBoards(newUser.getBoards());
+                    for(Board board : user.getBoards()){
+                        board.setUser(user);
+                    }
                     return userRepository.save(user);
                 })
                 .orElseGet(() -> {
